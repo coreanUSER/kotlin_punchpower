@@ -1,5 +1,6 @@
 package com.stn.punchpower
 
+import android.animation.*
 import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
@@ -118,8 +119,8 @@ class MainActivity : AppCompatActivity() {
         // '애니메이션 리소스'를 만들기 위해서는 [app > res > anim] 디렉토리를 사용
         // 'View 애니메이션'은 안드로이드 초창기부터 지원한 기능으로서, 간단한 방법으로도 꽤 다양한 연출이 가능
         // [Android Resource File] 리소스 타입 : 'Animation'
-        // 애니메이션 시작
-        val animation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.alpha_scale)
+        // View 애니메이션 시작
+        /*val animation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.alpha_scale)
         imageView.startAnimation(animation)
 
         // 애니메이션의 리스너 설정
@@ -135,7 +136,42 @@ class MainActivity : AppCompatActivity() {
             override fun onAnimationStart(animation: Animation?) {
                 // 애니메이션이 시작될 때의 코드를 작성
             }
-        })
+        })*/
+
+        // 속성 애니메이션 시작
+        // 속성 애니메이션을 불러옴 apply 함수를 사용하면 로딩된 Animator 가 this 로 지정됨
+        // 속성 애니메이션을 XML 에서 로드할 때는 'AnimatorInflater' 클래스르 사용한다.
+        AnimatorInflater.loadAnimator(this@MainActivity, R.animator.property_animation).apply {
+            // 애니메이션 종료 리스너를 추가
+            addListener(object : AnimatorListenerAdapter(){
+                override fun onAnimationEnd(animation: Animator?) { start() }
+            })
+
+            // 속성 애니메이션의 타겟을 글로브 이미지뷰로 지정
+            // 뷰 애니메이션읜 경우 'View.startAnimation()' 함수에 파라미터로 애니메이션 객체를 넘겼지만,
+            // 속성 애니메이션은 애니메이션 객체에서 타겟을 '이미지뷰'로 지정하는 점이 다르다.
+            // 속성 애니메이션은 타겟이 꼭 '뷰'일 필요가 없기 때문이다.
+            // 속성 애니메이션은 '뷰'가 아니더라도 애니메이션을 진행하며, 객체의 속성 이름이 같기만 하다면 속성값이 애니메이션이 된다.
+            setTarget(imageView)
+            // 애니메이션 시작
+            start()
+        }
+
+        // 컬러 애니메이션 시작
+        AnimatorInflater.loadAnimator(this@MainActivity, R.animator.color_anim).apply {
+            // 컬러 애니메이션을 불러오고 ObjectAnimator 클래스로 캐스팅
+            val colorAnimator = this@apply as? ObjectAnimator
+            // colorAnimator 가 ObjectAnimator 인 경우에만 실행
+            colorAnimator?.apply {
+                // Evaluator 를 ArgbEvaluator() 로 설정
+                // Evaluator 는 속성값이 어떤 식으로 변화해야 하는지 결정하는 클래스
+                setEvaluator(ArgbEvaluator())
+                // 타겟을 액티비티의 컨텐츠 뷰로 지정
+                target = window.decorView.findViewById(android.R.id.content)
+                // 애니메이션 시작
+                start()
+            }
+        }
     }
 
     // 펀치력 측정이 완료된 경우 처리 함수
