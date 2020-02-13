@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:duration="300"
+        android:repeatMode="reverse"
+        android:repeatCount="infinite"
+        android:fromYDelta="50%"
+        android:toYDelta="-100%"
+        />
+    <!--
+        fromXDelta: X축 시작 지점. % 단위로 설정
+        toXDelta: X축 도착 지점. % 단위로 설정
+        fromYDelta: Y축 시작 지점. % 단위로 설정
+        toYDelta: Y축 도착 지점. % 단위로 설정
+        duration: 애니메이션 시간, 단위는 밀리초
+        repeatMode: 반복할 경우 반복 모드. restart, reverse 모드가 있음
+        startOffset: 애니메이션 시작까지 대기 시간
+    -->
+</set>

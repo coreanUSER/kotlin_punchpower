@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <rotate
+        android:duration="300"
+        android:repeatMode="restart"
+        android:repeatCount="infinite"
+        android:fromDegrees="0"
+        android:toDegrees="360"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        />
+    <!--
+        fromDegrees: 회전 시작 각도
+        toDegrees: 회전 끝 각도
+        pivotX: 회전할 때 중점의 X 좌표. % 로 적은 경우에는 비율로 작동하고 숫자로 적으면 pixel 로 취급
+        pivotY: 회전할 때 중점의 Y 좌표. % 로 적은 경우에는 비율로 작동하고 숫자로 적으면 pixel 로 취급
+    -->
+</set>
